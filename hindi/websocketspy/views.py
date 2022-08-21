@@ -12,7 +12,6 @@ import face_recognition as fc
 from .models import AddEmployee
 from .forms import AddEmployeeForm, CreateUserForm
 
-
 path = "images"
 images = []
 personName = []
@@ -22,6 +21,10 @@ encodeList = []
 
 # Create your views here.
 def index(request):
+    # WSConsumer.receive.I
+    return render(request, 'websocketspy/index.html')
+
+def AttendanceOutView(request):
     return render(request, 'websocketspy/index.html')
 
 def AddEmployeeView(request):
@@ -77,3 +80,4 @@ def AddEmployeeView(request):
 
         context = {'form': form, 'form2': form2}
         return render(request, 'websocketspy/add_employee.html', context)
+

@@ -166,7 +166,7 @@
         }
         function isOpen(ws) { return ws.readyState === ws.OPEN }
 
-        const WS_URL = 'ws://' + location.host + '/';
+        const WS_URL = 'ws://' + location.host + 'out-attendance/';
         const FPS = 3;
         const ws = new WebSocket(WS_URL);
         ws.onopen = () => {
