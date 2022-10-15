@@ -12,11 +12,13 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
 
-    <style>
-        * {
-            padding: 0;
-            margin: 0;
-            box-sizing: border-box;
+{% block style %}
+
+<style>
+    * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
         }
 
         .container {
@@ -76,11 +78,14 @@
             font-weight: 500;
             color: white;
         }
-
+        .log-btns:hover{
+            color: blue;
+        }
         #remark {
             font-size: 2rem;
         }
     </style>
+    {% endblock style %}
 
     <title>Example Channels</title>
 </head>
@@ -88,25 +93,26 @@
 <body>
 
     <div class="containers">
-        <header style="background-color: #2A0944;"
-            class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 border-bottom">
+        <header style="background-color: #2A0944;" class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 border-bottom">
             <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-decoration-none">
                 <h3 id="logo">Om Enterprises</h3>
             </a>
 
             <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="#" class="nav-link px-2 head-link">Home</a></li>
-                <li><a href="#" class="nav-link px-2 head-link">Features</a></li>
-                <li><a href="#" class="nav-link px-2 head-link">Pricing</a></li>
-                <li><a href="#" class="nav-link px-2 head-link">FAQs</a></li>
-                <li><a href="#" class="nav-link px-2 head-link">About</a></li>
+                <li><a href="/" class="nav-link px-2 head-link">Home</a></li>
+                <li><a href="{% url 'mark-attendance-index' %}" class="nav-link px-2 head-link">Mark Attendance</a></li>
+                <li><a href="{% url 'show-attendance' %}" class="nav-link px-2 head-link">Show Attendance</a></li>
+                <li><a href="{% url 'add_employee' %}" class="nav-link px-2 head-link">Add Employee</a></li>
             </ul>
 
             <div class="col-md-3 text-end pe-3">
-                <button type="button" class="btn login-btns me-2">Login</button>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'logout' %}" class="nav-link head-link log-btns">Logout</a>
+                {% else %}
+                    <a href="{% url 'login' %}" class="nav-link head-link log-btns">Login</a>
+                {% endif %}
             </div>
         </header>
-
     </div>
 
     {% block content %}
@@ -114,36 +120,15 @@
         <div class="row">
             <div class="col-md-8">
                 <h1 id="attendance_page">Attendance</h1>
-                <video src="" id="video" autoplay></video>
+                <video style="" src="" id="video" autoplay></video>
                 <canvas id="canvas" height="100px" width="50px"></canvas>
                 <p id="remark"></p>
             </div>
-
             <div class="col-md-4">
-                <div class="content">
-                    <h1 id="attendance_page" class="m-2">Records</h1>
-                    <div class="box">
-
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Time</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for i in all_data %}
-                                <tr>
-                                    <th scope="row">{{i.id}}</th>
-                                    <td id="users">{{i.user_name}}</td>
-                                    <td id="times">{{i.attendance_time}}</td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+                <video>
+                    <source src="movie.mp4" type="video/mp4">
+                </video>
+            </div>
             </div>
         </div>
     </div>
@@ -187,5 +172,4 @@
     {% endblock scripts %}
 
 </body>
-
 </html>

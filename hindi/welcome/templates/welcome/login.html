@@ -1,0 +1,106 @@
+{% extends 'websocketspy/index.html' %}
+
+{% block style %}
+<link rel="stylesheet" href="../../../static/assets/style.css">
+<style>
+  * {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+  }
+
+  .container {
+    width: 100%;
+  }
+
+  .head-link {
+    color: white;
+    font-size: 1rem;
+    margin-left: 10px;
+  }
+
+  .login-btns {
+    padding: 5px 35px;
+    background-color: #EBF774;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+  #logo {
+    margin-left: 15px;
+    color: #EBF774;
+  }
+
+  #attendance_page {
+    color: blue;
+    font-weight: 800;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* text-align: center; */
+    text-decoration: underline;
+  }
+
+  #video {
+    margin-top: 15px;
+    /* width: 50%;
+      margin: auto auto; */
+    height: 68%;
+    box-shadow: 5px 5px 5px black;
+    border-radius: 33px;
+  }
+
+  .col-md-4 {
+    height: 100%;
+  }
+
+  .box {
+    width: 100%;
+    margin-top: 15px;
+    height: 450px;
+    border: 1px solid blue;
+    background-color: rgba(0, 0, 255, 0.377);
+    border-radius: 33px;
+  }
+
+  .list-group-item {
+    background-color: transparent;
+    font-weight: 500;
+    color: white;
+  }
+
+  #remark {
+    font-size: 2rem;
+  }
+</style>
+{% endblock style %}
+
+
+{% block content %}
+
+<div class="main">
+  <div class="container123">
+    <form action="" method="POST">
+      {% csrf_token %}
+      <div class="mb-3 containerinside">
+        <label for="label" class="form-label labels">Email address</label>
+        <input type="text" class="form-control" id="exampleFormControlInput1" name="username"
+          placeholder="Enter your email">
+      </div>
+      <div class="mb-3 containerinside">
+        <label for="label" class="form-label labels">Password</label>
+        <input type="password" class="form-control" id="exampleFormControlInput1" name="password"
+          placeholder="Enter your password">
+        <button class="btn loginbtn">Login</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% comment %} {% if messages %}
+<ul class="messages">
+  {% for message in messages %}
+  <li{% if message.tags %} style="list-style-type: none;" class="{{ message.tags }} alert alert-danger" {% endif %}>{{
+    message }}</li>
+    {% endfor %}
+</ul>
+{% endif %} {% endcomment %}
+{% endblock content %}

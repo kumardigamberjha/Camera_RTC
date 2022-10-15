@@ -91,7 +91,6 @@ class WSConsumer(WebsocketConsumer):
                     in_time = time_now.strftime('%H:%M:%S')
                     in_date = time_now.strftime("%Y-%m-%d")
 
-                    # user_name = name
                     attendance_time = in_time
                     dates = in_date
 
@@ -99,8 +98,6 @@ class WSConsumer(WebsocketConsumer):
                     arr = []
 
                     data = AttendanceModel.objects.filter(date = date.today()).order_by('id')
-                    # ss = serializers.serialize('json', data)
-
 
                     for i in last_attendance:
                         datesss = i.date
@@ -130,16 +127,11 @@ class WSConsumer(WebsocketConsumer):
 
                                 monthly_sal = salary
 
-
-                                # print("Total_deduct: ", per_day/per_hour/per_min)
-                                # sal_deds = (((((salary/30)/9)*(9-hr)))) + (((((salary/30)/9)*(9-hr))/60) * (60-min))
                                 sal_deds = (((salary/30)/540)*(540-late_in_min))
                                 today_sal_deds = ceil(sal_deds)
-                                # print("Sal Deduction: ", sal_deds)
 
                                 form = AttendanceModel(user_name = name, attendance_time = attendance_time, date = date.today(), late = str(datetime.strptime(attendance_time,"%H:%M:%S") - office_time), sal_ded = today_sal_deds)
                                 mod = AttendanceModel.objects.filter(user_name = name, date = date.today()).exists()
-                                # salary = monthly_sal
                                 if mod == True:
                                     self.send(f"Attendance for {name} Already Done")
                                     
@@ -154,8 +146,8 @@ class WSConsumer(WebsocketConsumer):
                                     slate = datetime.strptime(attendance_time,"%H:%M:%S") - office_time
 
                                 b = str(slate)
-                                hr = int(b[0:1])
-                                min = int(b[2:4])
+                                hr = int(b)
+                                min = int(b)
 
                                 late_in_min = hr*60+min
                                 print(late_in_min)
@@ -171,16 +163,12 @@ class WSConsumer(WebsocketConsumer):
 
                                 monthly_sal = salary
 
-                                # sal_deds = (((((salary/30)/9)*(9-hr))/60)*(60-min))
-                                # sal_deds = (((((salary/30)/9)*(9-hr)))) + (((((salary/30)/9)*(9-hr))/60) * (60-min))
                                 sal_deds = (((salary/30)/540)*(540-late_in_min))
 
                                 today_sal_deds = ceil(sal_deds)
-                                # print("Late: ", datetime.strptime(attendance_time,"%H:%M:%S") > office_time, datetime.strptime(attendance_time,"%H:%M:%S") - office_time)
                                 form = AttendanceModel(user_name = name, attendance_time = attendance_time, date = date.today(), late = str(datetime.strptime(attendance_time,"%H:%M:%S") - office_time), sal_ded = today_sal_deds)
                                 mod = AttendanceModel.objects.filter(user_name = name, date = date.today()).exists()
 
-                                # salary = monthly_sal
                                 if mod == True:
                                     self.send(f"Attendance for {name} Done")
                                     
@@ -263,8 +251,6 @@ class WSConsumer(WebsocketConsumer):
 
                                 monthly_sal = salary
                                 print("Monthly Sal: ", monthly_sal)
-                                # sal_deds = (((((monthly_sal/30)/9)*(9-hr))/60)*(60-min))
-                                # sal_deds = (((((salary/30)/9)*(9-hr)))) + (((((salary/30)/9)*(9-hr))/60) * (60-min))
                                 sal_deds = (((salary/30)/540)*(540-late_in_min))
 
                                 today_sal_deds = ceil(sal_deds)

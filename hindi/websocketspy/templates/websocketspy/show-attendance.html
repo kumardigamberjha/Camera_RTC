@@ -1,0 +1,29 @@
+{% extends 'welcome/welcome_page.html' %}
+
+{% block content %}
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Date</th>
+            <th scope="col">Attendance Time</th>
+            <th scope="col">Late</th>
+            <th scope="col">Today's Salary</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for i in data %}
+        <tr>
+            <th scope="row">{{i.id}}</th>
+            <td>{{i.user_name}}</td>
+            <td>{{i.date}}</td>
+            <td>{{i.attendance_time}}</td>
+            <td>{{i.late|slice:"0:4"}}</td>
+            <td>{{i.sal_ded}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock content %}

@@ -1,0 +1,30 @@
+{% extends 'websocketspy/index.html' %}
+
+{% block content %}
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} style="list-style-type: none;" class="{{ message.tags }} alert alert-danger"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+
+<main class="form-signin w-100 m-auto">
+    <form method="POST" action="/">
+      {% csrf_token %}
+      <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+  
+      <div class="form-floating">
+        <input type="text" class="form-control w-100" id="floatingInput" name="username" placeholder="name@example.com">
+        <label for="floatingInput">Email address</label>
+      </div>
+      <div class="form-floating">
+        <input type="password" class="form-control w-100" id="floatingPassword" name="password" placeholder="Password">
+        <label for="floatingPassword">Password</label>
+      </div>
+
+      <input type="submit" value="Sign In">
+    </form>
+      
+  {% endblock content %}

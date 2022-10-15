@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from time import sleep
 import cv2
 import base64
@@ -9,7 +9,7 @@ import time
 from time import gmtime, strftime
 from PIL import Image
 import face_recognition as fc
-from .models import AddEmployee
+from .models import AddEmployee, AttendanceModel
 from .forms import AddEmployeeForm, CreateUserForm
 
 path = "images"
@@ -21,7 +21,6 @@ encodeList = []
 
 # Create your views here.
 def index(request):
-    # WSConsumer.receive.I
     return render(request, 'websocketspy/index.html')
 
 def AttendanceOutView(request):
@@ -29,7 +28,7 @@ def AttendanceOutView(request):
 
 def AddEmployeeView(request):
     if not request.user.is_superuser:
-        return render(request, 'employee/superusers_req.html')
+        return redirect('/')
     else:
         form = AddEmployeeForm()
         form2 = CreateUserForm()
@@ -71,13 +70,15 @@ def AddEmployeeView(request):
                 form.save()
                 form2.save()
                 print("Form Saved")
-                # messages.success(request, "User Added" )
-                # redirect('/')
             else:
-                # messages.error(request, f"Error. {form.errors}")
                 print("Error")
                 print(form.errors)
 
         context = {'form': form, 'form2': form2}
         return render(request, 'websocketspy/add_employee.html', context)
 
+def showAttendanceView(request):
+    date = datetime.today()
+    data = AttendanceModel.objects.filter(date = date)
+    context = {'data': data}
+    return render(request, 'websocketspy/show-attendance.html', context)
